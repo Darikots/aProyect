@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Federacion</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+    <li class="nav-item active">
+        <a class="nav-link" href="/">Inicio</a>
+	  
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/equipos/listar">Equipos </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/jugadores/listar">Jugadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/torneos/listar">Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadTor/listar">Ciudad Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadDep/listar">Ciudad Departamento</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/federacion/listar">Federacion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/departamento/listar">Departamentos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/empleado/listar">Empleados</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+	<div class="container mt-4">
+	<h1>Federacion</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>CIF</th>
+					<th>DIRECCION FEDERACION</th>
+					<th>TELEFONO</th>
+					<th>CANTIDAD DEPARTAMENTOS</th>
+					<th>CANTIDAD TORNEOS</th>
+				</tr>
+				<tbody>
+					<tr th:each="federacion:${federacion}">
+						<td th:text="${federacion.CIF}"></td>
+						<td th:text="${federacion.direccionFederacion}"></td>
+						<td th:text="${federacion.telefono}"></td>
+						<td th:text="${federacion.departamentos.size()}"></td>
+						<td th:text="${federacion.torneos.size()}"></td>
+						<td>
+							
+							<a class="btn btn-outline-primary" th:href="@{/federacion/showFormForUpdate/{id}(id=${federacion.idFederacion})}" >Editar</a>
+							<a class="btn btn-outline-danger" th:href="@{'/federacion/delete/' + ${federacion.idFederacion}}">Eliminar</a>
+						</td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+	</div>
+	<div class="container mt-4">
+	<form th:object="${feder}" th:action="@{/federacion/agregar}" method="post">
+    <div class="form-group">
+        <label for="CIF">CIF</label>
+        <input th:field="*{CIF}" id="CIF" placeholder="Inserte el CIF de la federacion" type="text"
+               class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="direccionFederacion">Direccion de la Federacion</label>
+        <input th:field="*{direccionFederacion}" id="direccionFederacion" placeholder="Escribe la direccion de la federacion" type="text"
+               class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="telefono">Telefono</label>
+        <input th:field="*{telefono}" id="telefono" placeholder="Telefono de la federacion" type="number"
+               class="form-control" required>
+    </div>
+    <br>
+    <button class="btn btn-success" type="submit">Guardar</button> 
+	</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Ciudades Departamentos</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+    <li class="nav-item active">
+        <a class="nav-link" href="/">Inicio</a>
+	  
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/equipos/listar">Equipos </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/jugadores/listar">Jugadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/torneos/listar">Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadTor/listar">Ciudad Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadDep/listar">Ciudad Departamento</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/federacion/listar">Federacion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/departamento/listar">Departamentos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/empleado/listar">Empleados</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+	<div class="container mt-4">
+	<h1>Ciudades Departamentos</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>NOMBRE CIUDAD</th>
+					<th>CANTIDAD DEPARTAMENTOS</th>
+				</tr>
+				<tbody>
+					<tr th:each="ciudadDep:${ciudadDep}">
+						<td th:text="${ciudadDep.nombreCiudad}"></td>
+						<td th:text="${ciudadDep.departamento.size()}"></td>
+						<td>
+							<a class="btn btn-outline-primary" th:href="@{/ciudadDep/showFormForUpdate/{id}(id=${ciudadDep.codigoCiudad})}" >Editar</a>
+							<a class="btn btn-outline-danger" th:href="@{'/ciudadDep/delete/' + ${ciudadDep.codigoCiudad}}">Eliminar</a>
+						</td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+	</div>
+	<div class="container mt-4">
+	<form th:object="${ciudad}" th:action="@{/ciudadDep/agregar}" method="post">
+    <div class="form-group">
+        <label for="nombreCiudad">Nombre de la Ciudad</label>
+        <input th:field="*{nombreCiudad}" id="nombreCiudad" placeholder="Escribe el nombre de la ciudad" type="text"
+               class="form-control" required>
+    </div>
+    <br>
+    <button class="btn btn-success" type="submit">Guardar</button> 
+	</form>
+	</div>
+</body>
+</html>

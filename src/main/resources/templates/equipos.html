@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Equipos</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+    <li class="nav-item active">
+        <a class="nav-link" href="/">Inicio</a>
+	  
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/equipos/listar">Equipos </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/jugadores/listar">Jugadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/torneos/listar">Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadTor/listar">Ciudad Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadDep/listar">Ciudad Departamento</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/federacion/listar">Federacion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/departamento/listar">Departamentos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/empleado/listar">Empleados</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+<div class="container mt-4">
+	<h1>Equipos</h1>
+	<table class="table">
+		<thead>
+			<tr >
+				
+				<th>Nombre</th>
+				
+				<th>Direccion</th>
+				
+				<th>Fecha Fundacion</th>
+				
+				<th>Numero Jugadores</th>
+				
+				<th>Numero de Torneos </th>
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="equipo:${equipos}">
+				<td th:text="${equipo.nombreEquipo}"></td>
+				<td th:text="${equipo.direccionEquipo}"></td>
+				<td th:text="${equipo.fechaFundacion}"></td>
+				<td th:text="${equipo.jugadores.size()}"></td>
+				<td th:text="${equipo.torneos.size()}"></td>
+				<td>
+				<a class="btn btn-outline-primary" th:href="@{/equipos/showFormForUpdate/{id}(id=${equipo.idEquipo})}" >Editar</a>
+				<a class="btn btn-outline-danger" th:href="@{/equipos/delete/{id}(id=${equipo.idEquipo})}">Eliminar</a></td>
+				
+				
+			</tr>
+		
+		</tbody>
+	</table>
+</div>
+<div class="container mt-3">
+<form th:object="${equipo}" th:action="@{/equipos/agregar}" method="post">
+    <div class="form-group">
+        <label for="nombreEquipo">Nombre del equipo</label>
+        <input th:field="*{nombreEquipo}" id="nombreEquipo" type="text"
+               class="form-control"  required>
+    </div>
+    <div class="form-group">
+        <label for="direccionEquipo">Direccion del equipo</label>
+        <input th:field="*{direccionEquipo}" id="direccionEquipo" type="text"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="fechaFundacion">Fecha Fundacion</label>
+        <input th:field="*{fechaFundacion}" id="fechaFundacion"  type="date"
+               class="form-control">
+    </div>
+    <br>
+    
+    <button class="btn btn-success" type="submit">Guardar</button>
+</form>
+
+</div>
+
+
+</body>
+</html>

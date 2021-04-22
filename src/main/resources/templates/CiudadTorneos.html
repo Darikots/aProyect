@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Ciudades Torneos</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+    <li class="nav-item active">
+        <a class="nav-link" href="/">Inicio</a>
+	  
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/equipos/listar">Equipos </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/jugadores/listar">Jugadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/torneos/listar">Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadTor/listar">Ciudad Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadDep/listar">Ciudad Departamento</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/federacion/listar">Federacion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/departamento/listar">Departamentos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/empleado/listar">Empleados</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+<div class="container mt-4">
+
+<h1>Ciudades Torneos</h1>
+
+	<table class="table">
+		<thead>
+			<tr >
+				
+				<th>Nombre</th>
+				
+				<th>Numero de torneos</th>
+		
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="ciudad:${ciudadTorneo}">
+				<td th:text="${ciudad.nombreCiudad}"></td>
+				<td th:text="${ciudad.torneos.size()}"></td>
+				<td>
+				<a class="btn btn-outline-primary" th:href="@{/ciudadTor/showFormForUpdate/{id}(id=${ciudad.codigoCiudad})}" >Editar</a>
+				<a class="btn btn-outline-danger" th:href="@{/ciudadTor/delete/{id}(id=${ciudad.codigoCiudad})}">Eliminar</a></td>
+				
+				
+			</tr>
+		
+		</tbody>
+	</table>
+</div>
+<div class="container mt-3">
+<form th:object="${ciudadesTorneo}" th:action="@{/ciudadTor/agregar}" method="post">
+    <div class="form-group">
+        <label for="nombreCiudad">Nombre de la Ciudad</label>
+        <input th:field="*{nombreCiudad}" id="nombreCiudad" type="text"
+               class="form-control"  required>
+    </div>
+  <br>
+    <button class="btn btn-success" type="submit">Guardar</button>
+</form>
+</div>
+</body>
+</html>

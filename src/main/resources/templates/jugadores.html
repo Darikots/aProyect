@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Jugadores</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+    <li class="nav-item active">
+        <a class="nav-link" href="/">Inicio</a>
+	  
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/equipos/listar">Equipos </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/jugadores/listar">Jugadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/torneos/listar">Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadTor/listar">Ciudad Torneos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ciudadDep/listar">Ciudad Departamento</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/federacion/listar">Federacion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/departamento/listar">Departamentos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/empleado/listar">Empleados</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+<div class="container mt-4">
+
+<h1>Jugadores</h1>
+
+	<table class="table">
+		<thead>
+			<tr >
+			
+				<th>Nombre</th>
+				
+				<th>DNI</th>
+				
+				<th>Telefono</th>
+				
+				<th>Puesto</th>
+				
+				<th>Altura</th>
+				
+				<th>Activo</th>
+				
+				<th>Tarjetas</th>
+				
+				<th>Numero Goles</th>
+				
+				<th>Equipo</th>
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="jugador:${jugadores}">
+				<td th:text="${jugador.nombreJugador}"></td>
+				<td th:text="${jugador.dni}"></td>
+				<td th:text="${jugador.telefono}"></td>
+				<td th:text="${jugador.puesto}"></td>
+				<td th:text="${jugador.altura}"></td>
+				<td th:text="${jugador.activo}"></td>
+				<td th:text="${jugador.tarjetas}"></td>
+				<td th:text="${jugador.numGoles}"></td>
+				<td th:text="${jugador?.equipo?.getNombreEquipo()}"></td> 
+				<td> <a class="btn btn-outline-primary" th:href="@{/jugadores/showFormForUpdate/{id}(id=${jugador.idJugadores})}" >Editar</a>
+				<a class="btn btn-outline-danger" th:href="@{/jugadores/delete/{id}(id=${jugador.idJugadores})}">Eliminar</a></td>
+			</tr>
+		
+		</tbody>
+	</table>
+</div>
+
+<div class="container mt-3">
+<form action="#" th:action="@{/jugadores/agregar}" th:object="${jugador}"  method="post">
+    <div class="form-group">
+        <label for="nombreJugador">Nombre del jugador</label>
+        <input th:field="*{nombreJugador}" id="nombreJugador" type="text"
+               class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="dni">DNI</label>
+        <input th:field="*{dni}" id="dni"  type="text"
+               class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="telefono">Telefono del jugador</label>
+        <input th:field="*{telefono}" id="telefono"  type="number"
+               class="form-control" >
+    </div>
+    <div class="form-group">
+        <label for="puesto">Puesto del jugador</label>
+        <input th:field="*{puesto}" id="puesto" type="text"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="altura">Altura del jugador</label>
+        <input th:field="*{altura}" id="altura" type="text"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <label class="form-check-label" for="activo">Jugador sigue activo</label>
+        <input th:block="*{activo}" id="activo" name="activo" type="radio"  value="false"
+                       class="form-check" >
+                       <label for="activo">Retirado</label>
+               <input th:block="*{activo}" id="activo" name= "activo"  type="radio"  value="true"
+               class="form-check">
+					<label for="activo">Activo</label>
+    </div>
+    
+    <div class="form-group">
+        <label for="numGoles">Numero de goles</label>
+        <input th:field="*{numGoles}" id="numGoles" type="number" 
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="tarjetas">Tarjetas del jugador</label>
+        <input th:field="*{tarjetas}" id="tarjetas" type="number" 
+               class="form-control">
+    </div>
+    
+    
+    <div class="form-group" >
+        <label for="equipo">Equipo</label>
+        <select th:field="*{equipo}" class="form-control">
+        	<th:block th:each="equi:${equipos}">
+        		<option th:text="${equi.nombreEquipo}" th:value="${equi.idEquipo}">
+        	</th:block>
+        </select>
+    </div>
+    <br>
+    <button class="btn btn-success" type="submit">Guardar</button>
+</form>
+</div>
+</body>
+</html>

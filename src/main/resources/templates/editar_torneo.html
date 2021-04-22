@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Edicion Torneos</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Editar Torneo</h1>
+        <hr>
+
+        <form action="#" th:action="@{/torneos/agregar}"  th:object="${torneos}" method="POST">
+
+            <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{idTorneo}" />
+
+            <input type="text" th:field="*{nombreTorneo}" class="form-control mb-4 col-4" required>
+
+            <input type="text" th:field="*{descripcionTorneo}" class="form-control mb-4 col-4">
+
+        
+            
+            <select th:field="*{ciudad}" class="form-control">
+        	<th:block th:each="ciudad:${ciudad}">
+        		<option th:text="${ciudad.nombreCiudad}" th:value="${ciudad.codigoCiudad}">
+        	</th:block>
+        </select>
+        <div class="form-group">
+        <label for="federacion">Federacion</label>
+        <select th:field="*{federacion}" class="form-control">
+        	<th:block th:each="fed : ${federacion}">
+        		<option th:text="${fed.CIF}" th:value="${fed.idFederacion}">
+        	</th:block>
+        </select>
+    </div>
+        
+        <div class="form-group">
+		       <th:block th:each="equi : ${equipos}">
+		       <div class="form-check">
+		            
+		            <input class="form-check-input" th:field="*{equipos}" type="checkbox" id="equipos" th:value="${equi.idEquipo}" th:text="${equi.nombreEquipo}">
+		            
+		            </div>
+		       </th:block>
+		</div>
+
+            <button type="submit" class="btn btn-info col-2"> Editar Torneo</button>
+        </form>
+
+        <hr>
+
+        <a th:href="@{/jugadores/listar}">Lista de Torneos</a>
+    </div>
+</body>
+
+</html>
